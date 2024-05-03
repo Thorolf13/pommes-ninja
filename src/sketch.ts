@@ -1,5 +1,5 @@
 import p5 from "p5";
-import assetsList from './assets.json';
+import { images as imageAssets, fonts as fontsAssets } from "./assets-load";
 
 type Assets = { [key: string]: p5.Image }
 type Fonts = { [key: string]: p5.Font }
@@ -393,7 +393,7 @@ class GameState {
   }
 
   addStartFruit (): void {
-    const asset = 'apple_1-full';
+    const asset = 'apple_1_full';
     const pos = new Vector2(this.width / 2 + 200, this.height / 2 + 100);
     const size = new Vector2(66, 66);
 
@@ -502,7 +502,7 @@ class GameState {
   spawnFruit (type: 'fruit' | 'bomb'): void {
     const toRight = random.boolean();
 
-    const asset = type == 'fruit' ? 'apple_1-full' : 'strawberry-full'
+    const asset = type == 'fruit' ? 'apple_1_full' : 'strawberry_full'
     const pos = new Vector2(toRight ? random.float(0, this.width / 2) : random.float(this.width / 2, this.width), this.height + 50);
     const size = new Vector2(66, 66);
     const v = new Vector2((toRight ? 1 : -1) * random.float(1, 3), -random.float(7, 9.5)).mult(COEF_M_PIXEL);
@@ -522,8 +522,8 @@ class GameState {
     const index = this.objects.indexOf(fruit);
     this.objects.splice(index, 1);
 
-    const assetLeft = 'apple_1-left';
-    const assetRight = 'apple_1-right';
+    const assetLeft = 'apple_1_left';
+    const assetRight = 'apple_1_right';
 
     const left = new GObject(this.objects.length, fruit.box.pos, fruit.box.size, assetLeft);
     const right = new GObject(this.objects.length, fruit.box.pos, fruit.box.size, assetRight);
@@ -558,11 +558,11 @@ export function sketch (p: p5) {
   const assets: Assets = {};
 
   p.preload = () => {
-    for (const key in assetsList) {
-      console.log('preload', key);
-      assets[key] = p.loadImage(assetsList[key]);
+    for (const key in imageAssets) {
+      console.log('preload', key, imageAssets[key]);
+      assets[key] = p.loadImage(imageAssets[key]);
     }
-    fonts['gang_of_three'] = p.loadFont('/fonts/GangofThree.ttf');
+    fonts['gang_of_three'] = p.loadFont(fontsAssets['gangOfThree']);
   }
 
   p.setup = () => {

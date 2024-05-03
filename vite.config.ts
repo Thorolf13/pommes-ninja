@@ -5,6 +5,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
 
   return {
+    base: 'pommes-ninja',
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./', import.meta.url))
